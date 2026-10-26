@@ -24,11 +24,12 @@ README_TABLES = {
                [("success", 100, 1), ("crashed", 100, 1), ("avg_speed", 1, 1), ("cost", 1, 2), ("near_miss", 100, 1)]),
 }
 # report Table 1: (row label, highway method, ramp method)
+# columns: highway crash, highway return, ramp success, 2x-density ramp success
 REPORT_ROWS = [
     ("Random", "base_random", "base_random"), ("Constant speed", "base_constant_speed", "base_constant_speed"),
-    ("IDM+MOBIL (rules)", "base_idm_mobil", "base_idm_mobil"), ("DQN", "hw_dqn", None),
+    ("Rule-based (IDM+MOBIL)", "base_idm_mobil", "base_idm_mobil"), ("DQN", "hw_dqn", None),
     ("D3QN (ours)", "hw_d3qn", "ramp_d3qn"), ("QR-DQN", "hw_qrdqn", None), ("PPO", "hw_ppo", "ramp_ppo"),
-    ("PPO-Attn", "hw_ppo_attn", "ramp_ppo_attn"), ("PPO-Attn+penalty", None, "ramp_ppo_pen"),
+    ("PPO + attention", "hw_ppo_attn", "ramp_ppo_attn"), (r"\quad + fixed penalty", None, "ramp_ppo_pen"),
     ("MaskablePPO (shield)", None, "ramp_maskable"), (r"\textbf{SafeLane}", "hw_ppo_lag", "ramp_ppo_lag"),
     (r"\textbf{SafeLane} (long)", "ext_hw_ppo_lag", "ext_ramp_ppo_lag"),
     ("SafeLane-Mixed (long)", "ext_mixed_ppo_lag", "ext_mixed_ppo_lag"),
@@ -74,8 +75,7 @@ def report_problems(tex: str, s: pd.DataFrame) -> tuple[int, list[str]]:
     problems, n = [], 0
     for label, hw, ramp in REPORT_ROWS:
         expected = " & ".join([label, cell(hw, "highway", "crashed"), cell(hw, "highway", "return", 1),
-                               cell(hw, "hw_density_0.5", "crashed"), cell(ramp, "ramp_merge", "success"),
-                               cell(ramp, "ramp_merge", "crashed"), cell(ramp, "ramp_density_2.0", "success")])
+                               cell(ramp, "ramp_merge", "success"), cell(ramp, "ramp_density_2.0", "success")])
         n += 1
         if expected + r" \\" not in tex:
             problems.append(f"report Table 1 row differs, expected: {expected}")
