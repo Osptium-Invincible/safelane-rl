@@ -1,0 +1,5 @@
+# Ablation: same cost as ppo_lag but a FIXED penalty weight (no dual update)
+base: ppo_lag
+lagrangian:
+  fixed: true
+  lam_init: 0.1

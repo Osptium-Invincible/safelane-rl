@@ -1,0 +1,15 @@
+# SafeLane main model: ego-attention PPO + Lagrangian safety constraint (CMDP)
+# cost c_t = 1[TTC < 2 s] + 1[headway < 1 s] + 10 * 1[crash]; budget d per episode
+base: ppo_attn
+algo: ppo_lag
+safety:
+  ttc_threshold: 2.0
+  headway_threshold: 1.0
+  crash_cost: 10.0
+lagrangian:
+  cost_limit: 2.0
+  lam_init: 0.0
+  kp: 0.05
+  ki: 0.01
+  kd: 0.0
+  normalize: true

@@ -1,0 +1,42 @@
+# Evaluation scenarios: base env config + overrides. Episodes use fixed seeds 10000+i.
+episodes: 50
+
+scenarios:
+  # highway family
+  highway:          {env: highway}                       # official highway-v0 (4 lanes, 50 cars, 15 Hz)
+  highway_fast:     {env: highway_fast}
+  hw_density_0.5:   {env: highway_fast, config: {vehicles_density: 0.5}}
+  hw_density_1.5:   {env: highway_fast, config: {vehicles_density: 1.5}}
+  hw_density_2.0:   {env: highway_fast, config: {vehicles_density: 2.0}}
+  hw_density_2.5:   {env: highway_fast, config: {vehicles_density: 2.5}}   # beyond training range
+  hw_aggressive:    {env: highway_fast, config: {other_vehicles_type: aggressive}}
+  hw_cautious:      {env: highway_fast, config: {other_vehicles_type: cautious}}
+  # highway robustness (imperfect perception)
+  hw_noise_0.05:    {env: highway_fast, obs_noise: {sigma: 0.05}}
+  hw_noise_0.1:     {env: highway_fast, obs_noise: {sigma: 0.1}}
+  hw_noise_0.2:     {env: highway_fast, obs_noise: {sigma: 0.2}}
+  hw_dropout_0.3:   {env: highway_fast, obs_noise: {dropout: 0.3}}
+  hw_delay_1:       {env: highway_fast, obs_noise: {delay: 1}}
+  # ramp merging family (15 Hz evaluation)
+  ramp_merge:       {env: ramp_merge_eval}
+  ramp_density_0.5: {env: ramp_merge_eval, config: {vehicles_density: 0.5}}
+  ramp_density_0.75: {env: ramp_merge_eval, config: {vehicles_density: 0.75}}
+  ramp_density_1.5: {env: ramp_merge_eval, config: {vehicles_density: 1.5}}
+  ramp_density_2.0: {env: ramp_merge_eval, config: {vehicles_density: 2.0}}  # beyond training range
+  ramp_aggressive:  {env: ramp_merge_eval, config: {other_vehicles_type: aggressive}}
+  ramp_cautious:    {env: ramp_merge_eval, config: {other_vehicles_type: cautious}}
+  # ramp robustness
+  ramp_noise_0.05:  {env: ramp_merge_eval, obs_noise: {sigma: 0.05}}
+  ramp_noise_0.1:   {env: ramp_merge_eval, obs_noise: {sigma: 0.1}}
+  ramp_noise_0.2:   {env: ramp_merge_eval, obs_noise: {sigma: 0.2}}
+  ramp_dropout_0.3: {env: ramp_merge_eval, obs_noise: {dropout: 0.3}}
+  ramp_delay_1:     {env: ramp_merge_eval, obs_noise: {delay: 1}}
+  # transfer to the stock merge task
+  merge:            {env: merge}
+
+sets:
+  highway: [highway, highway_fast, hw_density_0.5, hw_density_1.5, hw_density_2.0, hw_density_2.5, hw_aggressive, hw_cautious]
+  highway_robust: [hw_noise_0.05, hw_noise_0.1, hw_noise_0.2, hw_dropout_0.3, hw_delay_1]
+  ramp: [ramp_merge, ramp_density_0.5, ramp_density_0.75, ramp_density_1.5, ramp_density_2.0, ramp_aggressive, ramp_cautious]
+  ramp_robust: [ramp_noise_0.05, ramp_noise_0.1, ramp_noise_0.2, ramp_dropout_0.3, ramp_delay_1]
+  transfer: [highway_fast, ramp_merge, merge]

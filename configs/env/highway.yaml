@@ -1,0 +1,7 @@
+# Official benchmark highway: highway-v0 defaults (15 Hz sim, 4 lanes, 50 vehicles, 40 s). Evaluation only.
+id: highway-v0
+config:
+  lanes_count: 4
+  vehicles_count: 50
+  vehicles_density: 1.0
+  duration: 40

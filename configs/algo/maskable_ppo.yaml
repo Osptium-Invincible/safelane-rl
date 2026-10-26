@@ -1,0 +1,8 @@
+# Ablation: PPO with the TTC safety shield as an action mask (sb3-contrib MaskablePPO)
+base: ppo
+algo: maskable_ppo
+shield:
+  ttc_threshold: 2.5
+  min_gap: 8.0
+  headway_threshold: 0.8
+  enforce: false

@@ -1,0 +1,6 @@
+# Our Double + Dueling DQN with 3-step returns (safelane/agents/d3qn.py)
+base: dqn
+algo: d3qn
+hyperparams:
+  double_q: true
+  n_steps: 3

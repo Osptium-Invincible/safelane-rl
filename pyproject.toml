@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "safelane-rl"
+version = "1.0.0"
+description = "Safe, robust and explainable reinforcement learning for highway driving (highway-env)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "highway-env==1.12.1",
+    "gymnasium==1.4.0",
+    "stable-baselines3[extra]==2.9.0",
+    "sb3-contrib==2.9.0",
+    "torch>=2.8",
+    "numpy",
+    "pandas",
+    "pyarrow",
+    "pyyaml",
+    "matplotlib",
+    "seaborn",
+    "scipy",
+    "optuna>=4.0",
+    "tensorboard",
+    "tabulate",
+    "jinja2",
+]
+
+[project.optional-dependencies]
+demo = ["gradio>=5.0"]
+dev = ["pytest", "ruff"]
+
+[tool.setuptools.packages.find]
+include = ["safelane*"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["B905"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning", "ignore::UserWarning"]

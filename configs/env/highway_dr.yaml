@@ -1,0 +1,6 @@
+# Highway with per-episode domain randomisation of traffic density and driver population
+base: highway_fast
+randomization:
+  params:
+    vehicles_density: {uniform: [0.7, 2.0]}
+    other_vehicles_type: {choice: [idm, randomized, aggressive, cautious]}

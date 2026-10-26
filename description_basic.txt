@@ -1,0 +1,1 @@
+Develop an autonomous driving agent using Reinforcement Learning algorithms such as PPO or DQN in a simulated highway environment. The agent will learn speed control, lane changing, collision avoidance, and safe merging. Performance will be evaluated using collision rates, average speed, merging success rates, and cumulative rewards across diverse traffic scenarios.

@@ -1,0 +1,20 @@
+archive/
+*.egg-info/
+*.log
+*.pyc
+__pycache__/
+.pytest_cache/
+results/eval/cache/
+.ruff_cache/
+runs/*.log
+runs/manual/
+runs/**/monitor/
+runs/_smoke/
+runs/**/tb/
+runs/**/train.log
+.venv/
+videos/_smoke.gif
+
+# course handouts (not part of the project)
+AI_Assignment2_2026_RL.pdf
+assignment_stochastic.pdf

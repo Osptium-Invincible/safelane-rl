@@ -1,0 +1,3 @@
+# Stock highway-env merge (ego on the main road yields to a merging NPC); v1 = fixed neighbour detection
+id: merge-v1
+config: {}

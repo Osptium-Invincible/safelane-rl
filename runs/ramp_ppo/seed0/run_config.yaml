@@ -1,0 +1,113 @@
+summary:
+  algo: ppo
+  seed: 0
+  total_timesteps: 120000
+  train_seconds: 282.6
+  env_names:
+  - ramp_merge_dr
+algo:
+  algo: ppo
+  policy: MlpPolicy
+  total_timesteps: 120000
+  n_envs: 8
+  observation:
+    type: Kinematics
+    vehicles_count: 5
+    features:
+    - presence
+    - x
+    - y
+    - vx
+    - vy
+    absolute: false
+    normalize: true
+    order: sorted
+    features_range:
+      x:
+      - -200
+      - 200
+      y:
+      - -16
+      - 16
+      vx:
+      - -80
+      - 80
+      vy:
+      - -80
+      - 80
+  action:
+    type: DiscreteMetaAction
+    target_speeds:
+    - 10
+    - 15
+    - 20
+    - 25
+    - 30
+  policy_kwargs:
+    net_arch:
+      pi:
+      - 256
+      - 256
+      vf:
+      - 256
+      - 256
+  hyperparams:
+    learning_rate: 0.0005
+    n_steps: 128
+    batch_size: 64
+    n_epochs: 10
+    gamma: 0.9
+    gae_lambda: 0.95
+    clip_range: 0.2
+    ent_coef: 0.01
+  name: ppo
+env_specs:
+- id: RampMerge-v0
+  config:
+    vehicles_density: 1.0
+    simulation_frequency: 5
+    observation:
+      type: Kinematics
+      vehicles_count: 5
+      features:
+      - presence
+      - x
+      - y
+      - vx
+      - vy
+      absolute: false
+      normalize: true
+      order: sorted
+      features_range:
+        x:
+        - -200
+        - 200
+        y:
+        - -16
+        - 16
+        vx:
+        - -80
+        - 80
+        vy:
+        - -80
+        - 80
+    action:
+      type: DiscreteMetaAction
+      target_speeds:
+      - 10
+      - 15
+      - 20
+      - 25
+      - 30
+  randomization:
+    params:
+      vehicles_density:
+        uniform:
+        - 0.5
+        - 1.5
+      other_vehicles_type:
+        choice:
+        - idm
+        - randomized
+        - aggressive
+        - cautious

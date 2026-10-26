@@ -1,0 +1,9 @@
+# Density curriculum: promoted by CurriculumCallback when training success >= threshold
+base: ramp_merge
+randomization:
+  params:
+    other_vehicles_type: {choice: [idm, randomized, aggressive, cautious]}
+  curriculum:
+    - {vehicles_density: {uniform: [0.3, 0.6]}}
+    - {vehicles_density: {uniform: [0.5, 1.0]}}
+    - {vehicles_density: {uniform: [0.5, 1.5]}}

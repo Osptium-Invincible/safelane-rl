@@ -1,0 +1,115 @@
+summary:
+  algo: d3qn
+  seed: 1
+  total_timesteps: 120000
+  train_seconds: 1700.3
+  env_names:
+  - highway_dr
+algo:
+  algo: d3qn
+  policy: MlpPolicy
+  total_timesteps: 120000
+  n_envs: 1
+  observation:
+    type: Kinematics
+    vehicles_count: 5
+    features:
+    - presence
+    - x
+    - y
+    - vx
+    - vy
+    absolute: false
+    normalize: true
+    order: sorted
+    features_range:
+      x:
+      - -200
+      - 200
+      y:
+      - -16
+      - 16
+      vx:
+      - -80
+      - 80
+      vy:
+      - -80
+      - 80
+  action:
+    type: DiscreteMetaAction
+    target_speeds:
+    - 10
+    - 15
+    - 20
+    - 25
+    - 30
+  policy_kwargs:
+    net_arch:
+    - 256
+    - 256
+  hyperparams:
+    learning_rate: 0.0005
+    buffer_size: 15000
+    learning_starts: 200
+    batch_size: 32
+    gamma: 0.9
+    train_freq: 1
+    gradient_steps: 1
+    target_update_interval: 50
+    exploration_fraction: 0.3
+    exploration_final_eps: 0.05
+    double_q: true
+    n_steps: 3
+  name: d3qn
+env_specs:
+- id: highway-fast-v0
+  config:
+    lanes_count: 3
+    vehicles_count: 20
+    vehicles_density: 1.0
+    duration: 30
+    observation:
+      type: Kinematics
+      vehicles_count: 5
+      features:
+      - presence
+      - x
+      - y
+      - vx
+      - vy
+      absolute: false
+      normalize: true
+      order: sorted
+      features_range:
+        x:
+        - -200
+        - 200
+        y:
+        - -16
+        - 16
+        vx:
+        - -80
+        - 80
+        vy:
+        - -80
+        - 80
+    action:
+      type: DiscreteMetaAction
+      target_speeds:
+      - 10
+      - 15
+      - 20
+      - 25
+      - 30
+  randomization:
+    params:
+      vehicles_density:
+        uniform:
+        - 0.7
+        - 2.0
+      other_vehicles_type:
+        choice:
+        - idm
+        - randomized
+        - aggressive
+        - cautious

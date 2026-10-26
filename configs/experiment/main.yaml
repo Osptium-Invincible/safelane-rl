@@ -1,0 +1,48 @@
+# Full experiment suite. `python scripts/run_experiments.py configs/experiment/main.yaml`
+# Each run trains once per seed into runs/<name>/seed<k>/ (finished runs are skipped).
+seeds: [0, 1, 2]
+
+runs:
+  # ---------------- E1-E3: highway driving (train highway-fast-v0 + traffic randomisation) ----------------
+  - {name: hw_dqn,        label: DQN,           group: highway, env: highway_dr, algo: dqn}
+  - {name: hw_d3qn,       label: D3QN (ours),   group: highway, env: highway_dr, algo: d3qn}
+  - name: hw_qrdqn
+    label: QR-DQN
+    group: highway
+    env: highway_dr
+    algo: qrdqn
+    variants: [{label: QR-DQN CVaR0.25, policy_kwargs: {cvar_alpha: 0.25}}]
+  - {name: hw_ppo,        label: PPO,           group: highway, env: highway_dr, algo: ppo}
+  - {name: hw_ppo_attn,   label: PPO-Attn,      group: highway, env: highway_dr,   algo: ppo_attn}
+  - {name: hw_ppo_lag,    label: SafeLane (PPO-Lag-Attn), group: highway, env: highway_dr, algo: ppo_lag}
+
+  # ---------------- E4/E5/E8/E9: on-ramp merging (our RampMerge-v0) ----------------
+  - {name: ramp_d3qn,     label: D3QN (ours),   group: ramp, env: ramp_merge_dr, algo: d3qn}
+  - {name: ramp_ppo,      label: PPO,           group: ramp, env: ramp_merge_dr, algo: ppo}
+  - {name: ramp_ppo_attn, label: PPO-Attn,      group: ramp, env: ramp_merge_dr, algo: ppo_attn}
+  - {name: ramp_ppo_attn_cur, label: PPO-Attn + curriculum, group: ramp, env: ramp_merge_curriculum, algo: ppo_attn}
+  - {name: ramp_ppo_pen,  label: PPO-Attn + fixed penalty, group: ramp, env: ramp_merge_dr, algo: ppo_penalty}
+  - {name: ramp_ppo_lag,  label: SafeLane (PPO-Lag-Attn), group: ramp, env: ramp_merge_dr, algo: ppo_lag}
+  - {name: ramp_maskable, label: MaskablePPO (shield), group: ramp, env: ramp_merge_dr, algo: maskable_ppo}
+
+  # ---------------- E6: one agent for both tasks (mixed-scenario training) ----------------
+  - name: mixed_ppo_lag
+    label: SafeLane-Mixed
+    group: mixed
+    env: [highway_dr, ramp_merge_dr]
+    algo: ppo_lag
+    overrides: {total_timesteps: 200000}
+
+  # ---------------- E10: safety budget sweep (Pareto front), single seed ----------------
+  - {name: ramp_lag_d0.5, label: "PPO-Lag d=0.5", group: pareto, env: ramp_merge_dr, algo: ppo_lag, seeds: [0], overrides: {lagrangian: {cost_limit: 0.5}}}
+  - {name: ramp_lag_d1,   label: "PPO-Lag d=1",   group: pareto, env: ramp_merge_dr, algo: ppo_lag, seeds: [0], overrides: {lagrangian: {cost_limit: 1.0}}}
+  - {name: ramp_lag_d4,   label: "PPO-Lag d=4",   group: pareto, env: ramp_merge_dr, algo: ppo_lag, seeds: [0], overrides: {lagrangian: {cost_limit: 4.0}}}
+  - {name: ramp_lag_d8,   label: "PPO-Lag d=8",   group: pareto, env: ramp_merge_dr, algo: ppo_lag, seeds: [0], overrides: {lagrangian: {cost_limit: 8.0}}}
+
+# Which evaluation scenario sets each group is tested on (see configs/experiment/eval.yaml)
+eval_sets:
+  highway: [highway, highway_robust, transfer]
+  ramp: [ramp, ramp_robust, transfer]
+  mixed: [highway, ramp, transfer]
+  pareto: [ramp]
+  baseline: [highway, highway_robust, ramp, ramp_robust, transfer]

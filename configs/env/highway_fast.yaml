@@ -1,0 +1,7 @@
+# Training highway: highway-fast-v0 (5 Hz sim, 3 lanes, 20 vehicles, 30 s), ~11x faster than highway-v0
+id: highway-fast-v0
+config:
+  lanes_count: 3
+  vehicles_count: 20
+  vehicles_density: 1.0
+  duration: 30

@@ -1,0 +1,5 @@
+base: ramp_merge
+randomization:
+  params:
+    vehicles_density: {uniform: [0.5, 1.5]}
+    other_vehicles_type: {choice: [idm, randomized, aggressive, cautious]}

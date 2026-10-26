@@ -1,0 +1,20 @@
+\begin{tabular}{llrlllllll}
+\toprule
+Method & Steps & Seeds & Collision \% & Speed (m/s) & Return & TTC<1.5s \% & Headway<1s \% & RMS jerk & LC/km \\
+\midrule
+IDM+MOBIL (rule-based) & - & 1 & 0.0 & 22.0 & 30.1 & 0.0 & 0.0 & 4.05 & 1.5 \\
+SafeLane (PPO-Lag-Attn) & 120k & 3 & 0.0 & 20.7 & 33.0 & 0.0 & 1.0 & 2.75 & 2.1 \\
+SafeLane (long budget) & 400k & 3 & 0.7 & 20.7 & 32.8 & 0.4 & 2.2 & 2.62 & 2.3 \\
+SafeLane-Mixed (long budget) & 500k & 3 & 3.3 & 20.4 & 31.0 & 1.0 & 2.4 & 3.16 & 6.4 \\
+SafeLane-Mixed & 200k & 3 & 3.3 & 20.6 & 31.3 & 0.6 & 3.4 & 3.19 & 3.2 \\
+QR-DQN CVaR0.25 & 50k & 3 & 8.0 & 20.3 & 30.2 & 1.3 & 5.5 & 2.82 & 7.8 \\
+DQN & 50k & 3 & 8.7 & 20.3 & 30.1 & 1.8 & 7.2 & 2.89 & 13.2 \\
+QR-DQN & 50k & 3 & 14.7 & 21.2 & 29.2 & 2.9 & 10.9 & 3.14 & 4.7 \\
+PPO-Attn & 120k & 3 & 18.0 & 21.3 & 29.7 & 7.2 & 25.0 & 3.03 & 2.5 \\
+D3QN (long budget) & 120k & 3 & 29.3 & 22.8 & 27.1 & 7.4 & 23.5 & 3.46 & 4.8 \\
+PPO & 120k & 3 & 33.3 & 21.5 & 28.0 & 6.0 & 19.6 & 3.05 & 2.9 \\
+D3QN (ours) & 50k & 3 & 36.0 & 22.7 & 25.0 & 8.5 & 23.4 & 3.39 & 7.0 \\
+Random & - & 1 & 72.0 & 22.4 & 12.9 & 16.7 & 31.9 & 4.69 & 14.5 \\
+Constant speed & - & 1 & 96.0 & 24.4 & 14.2 & 19.1 & 48.1 & 2.20 & 0.0 \\
+\bottomrule
+\end{tabular}

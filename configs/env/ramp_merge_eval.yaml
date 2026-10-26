@@ -1,0 +1,4 @@
+# Full-fidelity RampMerge for evaluation (15 Hz simulation)
+base: ramp_merge
+config:
+  simulation_frequency: 15

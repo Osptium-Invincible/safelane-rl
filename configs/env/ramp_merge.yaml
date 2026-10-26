@@ -1,0 +1,6 @@
+# Our on-ramp merging scenario (ego starts on the ramp), see safelane/envs/ramp_merge.py.
+# Trained at 5 Hz simulation (like highway-fast-v0, ~2x faster); evaluated at 15 Hz.
+id: RampMerge-v0
+config:
+  vehicles_density: 1.0
+  simulation_frequency: 5

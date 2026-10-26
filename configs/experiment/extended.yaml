@@ -1,0 +1,21 @@
+# Long-budget training of the main models (run after main.yaml).
+# Reported separately as "long budget": the controlled comparison in main.yaml uses equal budgets.
+#   python scripts/run_experiments.py configs/experiment/extended.yaml --heavy 1 --light 1
+seeds: [0, 1, 2]
+
+runs:
+  - {name: ext_hw_ppo_lag,   label: SafeLane (long budget),       group: ext_highway, env: highway_dr,    algo: ppo_lag, overrides: {total_timesteps: 400000}}
+  - {name: ext_ramp_ppo_lag, label: SafeLane (long budget),       group: ext_ramp,    env: ramp_merge_dr, algo: ppo_lag, overrides: {total_timesteps: 400000}}
+  - name: ext_mixed_ppo_lag
+    label: SafeLane-Mixed (long budget)
+    group: ext_mixed
+    env: [highway_dr, ramp_merge_dr]
+    algo: ppo_lag
+    overrides: {total_timesteps: 500000}
+  - {name: ext_hw_d3qn,      label: D3QN (long budget),           group: ext_highway, env: highway_dr,    algo: d3qn,    overrides: {total_timesteps: 120000}}
+  - {name: ext_ramp_d3qn,    label: D3QN (long budget),           group: ext_ramp,    env: ramp_merge_dr, algo: d3qn,    overrides: {total_timesteps: 120000}}
+
+eval_sets:
+  ext_highway: [highway, highway_robust, transfer]
+  ext_ramp: [ramp, ramp_robust, transfer]
+  ext_mixed: [highway, ramp, transfer]

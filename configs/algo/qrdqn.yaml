@@ -1,0 +1,6 @@
+# Distributional QR-DQN (sb3-contrib); evaluated both risk-neutral and with CVaR action selection
+base: dqn
+algo: qrdqn
+policy_kwargs:
+  net_arch: [256, 256]
+  n_quantiles: 50
